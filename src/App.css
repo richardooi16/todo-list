@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.tasklist-container ul {
+  display: block;
+  text-align: left;
+  list-style-type: none;
+}
+
+.checkbox-task {
+  height: 30px;
+  width: 30px;
+}

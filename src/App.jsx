@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 
+let nextId = 0;
+
 function App() {
   const [taskList, setTaskList] = useState([]);
 
@@ -15,16 +17,17 @@ function App() {
     if (newTask.trim() != "") {
       setTaskList([
         ...taskList, // Put old items at the end
-        { item: newTask },
+        { 
+          id: nextId++,
+          item: newTask, 
+          completed: false 
+        },
       ]);
     }
-
-    console.log(taskList);
   }
 
   return (
     <div className="App">
-
       <h1>Todo List App</h1>
 
       <form onSubmit={handleSubmit}>
@@ -32,11 +35,19 @@ function App() {
         <button type="submit">Submit</button>
       </form>
 
-      <div>
-        {taskList.map((data) => (
-          <p>{data.item}</p>
-        ))}
+      <div className="tasklist-container">
+        <ul>
+          {taskList.map((data) => (
+            <li key={data.id}>
+              <label>
+                <input className="checkbox-task" type="checkbox" defaultChecked={false} />
+                {data.item}
+              </label>
+            </li>
+          ))}
+        </ul>
       </div>
+
     </div>
   );
 }
