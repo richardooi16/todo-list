@@ -5,17 +5,21 @@ import './App.css'
 
 function App() {
   const [taskList, setTaskList] = useState([]);
-  const [task, setTask] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
+    
+    // Add data validation here
+    const newTask = formJson.task;
 
-    console.log(formJson);
-    console.log(formJson.task);
-    taskList.push(formJson.task);
+    setTaskList([
+      ...taskList, // Put old items at the end
+      { item: newTask }
+    ]);
+
     console.log(taskList);
   };
 
@@ -29,7 +33,7 @@ function App() {
 
       <div>
         {taskList.map((data) => (
-          <p>{data}</p>
+          <p>{data.item}</p>
         ))}
       </div>
 
