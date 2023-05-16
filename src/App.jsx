@@ -1,7 +1,5 @@
-import { useState } from 'react'
-import { useForm } from "react-hook-form";
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -11,23 +9,26 @@ function App() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    
+
     // Add data validation here
     const newTask = formJson.task;
-
-    setTaskList([
-      ...taskList, // Put old items at the end
-      { item: newTask }
-    ]);
+    if (newTask.trim() != "") {
+      setTaskList([
+        ...taskList, // Put old items at the end
+        { item: newTask },
+      ]);
+    }
 
     console.log(taskList);
-  };
+  }
 
   return (
     <div className="App">
 
+      <h1>Todo List App</h1>
+
       <form onSubmit={handleSubmit}>
-        <input type="text" name="task"/>
+        <input type="text" name="task" />
         <button type="submit">Submit</button>
       </form>
 
@@ -36,9 +37,8 @@ function App() {
           <p>{data.item}</p>
         ))}
       </div>
-
     </div>
   );
 }
 
-export default App
+export default App;
