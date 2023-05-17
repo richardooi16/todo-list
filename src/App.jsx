@@ -5,6 +5,15 @@ let nextId = 0;
 
 function App() {
   const [taskList, setTaskList] = useState([]);
+  const [task, setTask] = useState("");
+
+  function resetInput() {
+    setTask("");
+  }
+
+  function handleCheckUpdate(data, e) {
+    data.completed = e.target.checked;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,14 +25,15 @@ function App() {
     const newTask = formJson.task;
     if (newTask.trim() != "") {
       setTaskList([
-        ...taskList, // Put old items at the end
-        { 
+        {
           id: nextId++,
-          item: newTask, 
-          completed: false 
+          item: newTask,
+          completed: false,
         },
+        ...taskList // Put old items at the end
       ]);
     }
+    resetInput();
   }
 
   return (
@@ -31,8 +41,13 @@ function App() {
       <h1>Todo List App</h1>
 
       <form onSubmit={handleSubmit}>
-        <input type="text" name="task" />
-        <button type="submit">Submit</button>
+        <input
+          type="text"
+          name="task"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
+        <button className="submit-task" type="submit">Add Task</button>
       </form>
 
       <div className="tasklist-container">
@@ -40,13 +55,21 @@ function App() {
           {taskList.map((data) => (
             <li key={data.id}>
               <label>
-                <input className="checkbox-task" type="checkbox" defaultChecked={false} />
+                <input
+                  className="checkbox-task"
+                  type="checkbox"
+                  defaultChecked={data.completed}
+                  onChange={(e) => handleCheckUpdate(data,e)}
+                />
                 {data.item}
               </label>
             </li>
           ))}
         </ul>
       </div>
+
+      {/* Button for Debugging */}
+      <button onClick={() => console.log(taskList)}>button</button>
 
     </div>
   );
