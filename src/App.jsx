@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 let nextId = 0;
@@ -6,6 +6,17 @@ let nextId = 0;
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [task, setTask] = useState("");
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('taskList'));
+    if (data.length != 0) {
+      setTaskList(data);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+  }, [taskList]);
 
   function resetInput() {
     setTask("");
