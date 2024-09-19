@@ -4,15 +4,8 @@ import "./App.css";
 let nextId = 0;
 
 function App() {
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState(JSON.parse(localStorage.getItem('taskList')) ?? []);
   const [task, setTask] = useState("");
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('taskList'));
-    if (data.length != 0) {
-      setTaskList(data);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('taskList', JSON.stringify(taskList));
@@ -70,7 +63,7 @@ function App() {
                   className="checkbox-task"
                   type="checkbox"
                   defaultChecked={data.completed}
-                  onChange={(e) => handleCheckUpdate(data,e)}
+                  onChange={(e) => handleCheckUpdate(data, e)}
                 />
                 {data.item}
               </label>
