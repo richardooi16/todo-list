@@ -40,6 +40,11 @@ function App() {
     resetInput();
   }
 
+  function clearList() {
+    setTaskList([]);
+    localStorage.clear();
+  }
+
   return (
     <div className="App">
       <h1>Todo List App</h1>
@@ -71,6 +76,8 @@ function App() {
           ))}
         </ul>
       </div>
+
+      <button onClick={() => clearList()}>Clear List</button>
 
       {/* Button for Debugging */}
       <button onClick={() => console.log(taskList)}>button</button>
