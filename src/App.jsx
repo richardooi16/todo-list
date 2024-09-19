@@ -1,14 +1,20 @@
+import React from "react";
 import { useState, useEffect } from "react";
+import ErrorBox, { ERROR_BOX_DURATION } from "./ErrorBox";
+
 import "./App.css";
 
 let nextId = 0;
 
 function App() {
-  const [taskList, setTaskList] = useState(JSON.parse(localStorage.getItem('taskList')) ?? []);
+  const [taskList, setTaskList] = useState(
+    JSON.parse(localStorage.getItem("taskList")) ?? []
+  );
   const [task, setTask] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('taskList', JSON.stringify(taskList));
+    localStorage.setItem("taskList", JSON.stringify(taskList));
   }, [taskList]);
 
   function resetInput() {
@@ -34,8 +40,11 @@ function App() {
           item: newTask,
           completed: false,
         },
-        ...taskList // Put old items at the end
+        ...taskList, // Put old items at the end
       ]);
+    } else {
+      setError("Title cannot be empty");
+      setTimeout(() => setError(""), ERROR_BOX_DURATION);
     }
     resetInput();
   }
@@ -56,7 +65,10 @@ function App() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
-        <button className="submit-task" type="submit">Add Task</button>
+        <button className="submit-task" type="submit">
+          Add Task
+        </button>
+        <ErrorBox message={error} />
       </form>
 
       <div className="tasklist-container">
@@ -80,8 +92,7 @@ function App() {
       <button onClick={() => clearList()}>Clear List</button>
 
       {/* Button for Debugging */}
-      <button onClick={() => console.log(taskList)}>button</button>
-
+      <button onClick={() => setError("")}>button</button>
     </div>
   );
 }

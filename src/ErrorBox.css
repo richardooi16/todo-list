@@ -1,0 +1,24 @@
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade {
+  0% { opacity: 0 }
+  20% { opacity: 1 }
+  80% { opacity: 1 }
+  100% { opacity: 0 }
+}
+
+.error-box {
+  margin: 4px;
+  color: black;
+  border: 1px solid red;
+  background-color: pink;
+  animation: fade 3.2s ease-in;
+}
